@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "author": "Uri Shaked",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": -115.2,
+      "left": -139.16,
+      "attrs": {}
+    },
+    { "type": "wokwi-led", "id": "led1", "top": -90, "left": -361, "attrs": { "color": "green" } },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -22.8,
+      "left": -361,
+      "attrs": { "color": "yellow" }
+    },
+    { "type": "wokwi-led", "id": "led3", "top": 44.4, "left": -361, "attrs": { "color": "red" } },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": -63.25,
+      "left": -278.4,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 80.75,
+      "left": -278.4,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 13.55,
+      "left": -278.4,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -258.9,
+      "left": -120.6,
+      "attrs": { "temperature": "61" }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": -199.2,
+      "left": 1.8,
+      "attrs": { "volume": "0.1" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "dht1:VCC", "esp:3V3", "red", [ "v19.2", "h-28.8" ] ],
+    [ "dht1:SDA", "esp:4", "green", [ "v19.2", "h76.9", "v153.6" ] ],
+    [ "dht1:GND", "esp:GND.2", "black", [ "v0", "h38.4" ] ],
+    [ "led1:A", "r1:1", "red", [ "v0", "h28.8", "v-9.6" ] ],
+    [ "r1:2", "esp:18", "green", [ "v0", "h75.6", "v163.2", "h115.2", "v-115.2" ] ],
+    [ "led2:A", "r3:1", "red", [ "v0" ] ],
+    [ "r3:2", "esp:19", "green", [ "v0", "h66", "v96", "h144", "v-134.4" ] ],
+    [ "led3:A", "r2:1", "red", [ "v0" ] ],
+    [ "r2:2", "esp:21", "green", [ "v0", "h56.4", "v38.4", "h163.2", "v-163.2" ] ],
+    [ "esp:23", "bz1:2", "red", [ "h76.8" ] ],
+    [ "bz1:1", "esp:GND.2", "black", [ "v0" ] ],
+    [ "led1:C", "esp:GND.3", "black", [ "v28.8", "h-28.4", "v172.8", "h403.2", "v-182.4" ] ],
+    [ "led2:C", "esp:GND.3", "black", [ "h-18.8", "v124.8", "h384", "v-172.8" ] ],
+    [ "led3:C", "esp:GND.3", "black", [ "v0", "h-9.2", "v48", "h364.8", "v-163.2" ] ]
+  ],
+  "dependencies": {}
+}
