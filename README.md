@@ -1,32 +1,45 @@
 # Rede Inteligente de Monitoramento Ambiental para Cidades Sustentáveis (ODS 11)
 
-Este projeto consiste em um sistema de monitoramento em tempo real de temperatura, umidade e qualidade do ar utilizando o microcontrolador ESP32 e o protocolo de comunicação MQTT. O projeto está alinhado com o Objetivo de Desenvolvimento Sustentável 11 da ONU.
+Este repositório contém o código-fonte e a documentação técnica para um sistema de monitoramento ambiental baseado em IoT, desenvolvido como requisito para a disciplina na Universidade Presbiteriana Mackenzie. O projeto foca no monitoramento de temperatura e umidade em tempo real, utilizando o protocolo MQTT para promover a sustentabilidade urbana (ODS 11).
 
-## 📋 Descrição do Funcionamento
-O sistema realiza leituras periódicas de sensores ambientais e processa os dados localmente. Dependendo dos níveis detectados, o sistema aciona alertas visuais (LEDs) e sonoros (Buzzer). Todos os dados são publicados em um broker MQTT para monitoramento remoto.
+## 🚀 Demonstração Direta
+- **Simulador Wokwi:** [Acesse o Projeto aqui](https://wokwi.com/projects/465458630027840513)
+- **Visualização MQTT:** [Console HiveMQ](https://www.hivemq.com/demos/websocket-client/) (Tópico: `patrick/monitoramento`)
 
-- **Status Normal:** LED Verde ativo.
-- **Status Atenção:** LED Amarelo ativo (Temp > 32°C ou Gás > 1800).
-- **Status Crítico:** LED Vermelho e Buzzer ativos (Temp > 38°C ou Gás > 3000).
+## 🛠️ Tecnologias e Componentes
+- **Hardware:** Microcontrolador ESP32.
+- **Sensores:** DHT22 (Temperatura e Umidade).
+- **Atuadores:** LEDs (Verde, Amarelo e Vermelho) e Buzzer Ativo.
+- **Protocolo de Comunicação:** MQTT (Message Queuing Telemetry Transport).
+- **Broker:** HiveMQ (`broker.hivemq.com`).
+- **Linguagem:** C++ (Framework Arduino).
 
-## 🛠️ Hardware Utilizado
-- [cite_start]**Microcontrolador:** ESP32 [cite: 11, 44]
-- [cite_start]**Sensor de Temperatura e Umidade:** DHT22 [cite: 51, 147]
-- [cite_start]**Sensor de Gases e Poluição:** MQ-135 [cite: 55, 148]
-- [cite_start]**Atuadores:** LEDs (Verde, Amarelo, Vermelho) e Buzzer Ativo [cite: 69, 74, 150-153]
+## 📋 Lógica de Funcionamento e Alertas
+O sistema monitora as condições ambientais e toma decisões locais baseadas na temperatura, além de publicar os dados em formato JSON para a nuvem:
 
-## 🌐 Comunicação e Protocolos
-- [cite_start]**Protocolo:** MQTT (Message Queuing Telemetry Transport) [cite: 11, 77]
-- [cite_start]**Broker:** HiveMQ (broker.hivemq.com) [cite: 79, 143]
-- **Tópicos:**
-  - `cidade/temperatura`
-  - `cidade/umidade`
-  - `cidade/qualidade_ar`
-  - [cite_start]`cidade/alerta` [cite: 145-146]
+| Faixa de Temperatura | Status | Sinalização Visual | Sinalização Sonora |
+| :--- | :--- | :--- | :--- |
+| Até 35°C | **NORMAL** | LED Verde | Silencioso |
+| 35,1°C a 60°C | **ATENÇÃO** | LED Amarelo | Silencioso |
+| Acima de 60°C | **ALERTA CRÍTICO** | LED Vermelho | Buzzer (1kHz) |
 
-## 🚀 Como Reproduzir
-1. Realize a montagem conforme o esquema elétrico disponível na pasta `/hardware`.
-2. Configure o ambiente de desenvolvimento para MicroPython (Thonny IDE ou VS Code).
-3. Instale a biblioteca `umqtt.simple` no ESP32.
-4. Carregue o arquivo `main.py` disponível na pasta `/software`.
-5. Monitore os dados através de um cliente MQTT ou Dashboard compatível.
+## 📂 Estrutura do Código
+O arquivo principal executa:
+1. Conexão estável com a rede Wi-Fi `Wokwi-GUEST`.
+2. Autenticação e conexão com o Broker MQTT com ID de cliente dinâmico.
+3. Leitura dos dados via sensor DHT22.
+4. Processamento da lógica de segurança e acionamento de GPIOS.
+5. Publicação de payload JSON no tópico `patrick/monitoramento`.
+
+## ⚙️ Como Reproduzir
+1. Instale as bibliotecas `PubSubClient` e `DHT sensor library` na sua IDE (Arduino ou VS Code).
+2. Carregue o código disponível no arquivo `.ino` deste repositório para o seu ESP32.
+3. Certifique-se de que a fiação segue os pinos:
+   - DHT22: Pin 4
+   - LED Verde: Pin 18 | Amarelo: Pin 19 | Vermelho: Pin 21
+   - Buzzer: Pin 23
+4. Use um cliente MQTT para assinar o tópico `patrick/monitoramento` e visualizar os dados.
+
+---
+**Autor:** Patrick Ribeiro Feitosa  
+**Instituição:** Universidade Presbiteriana Mackenzie
